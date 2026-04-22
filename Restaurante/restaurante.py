@@ -52,3 +52,95 @@ def iniciar_sesion():
             return False
 
     return False
+
+# 3. Funciones CRUD y ventas
+
+
+def mostrar_ventas():
+    print("\n--- VENTAS REGISTRADAS ---")
+    if len(ventas_restaurante) == 0:
+        print("No hay ventas registradas.")
+        return
+    for venta in ventas_restaurante:
+        print(f"ID: {venta['idVenta']} | Cliente: {venta['nombreCliente']} | Mesa: {venta['numeroMesa']} | Plato: {venta['platoPrincipal']} | Valor: ${venta['valorConsumo']} | Pago: {venta['metodoPago']} | Estado: {venta['estadoPedido']}")
+
+
+def ordenar_ventas():
+    ventas_restaurante.sort(key=lambda venta: venta["valorConsumo"])
+    print("\nVentas ordenadas por valor de menor a mayor.")
+    mostrar_ventas()
+
+
+def buscar_venta():
+    print("\n--- BUSCAR VENTA ---")
+    try:
+        id_buscar = int(input("Ingrese el ID de la venta: "))
+    except ValueError:
+        print("ID no válido.")
+        return
+
+    for venta in ventas_restaurante:
+        if venta["idVenta"] == id_buscar:
+            print(f"\nVenta encontrada:")
+            print(f"  Cliente : {venta['nombreCliente']}")
+            print(f"  Mesa    : {venta['numeroMesa']}")
+            print(f"  Plato   : {venta['platoPrincipal']}")
+            print(f"  Valor   : ${venta['valorConsumo']}")
+            print(f"  Pago    : {venta['metodoPago']}")
+            print(f"  Estado  : {venta['estadoPedido']}")
+            return
+
+    print("No se encontró ninguna venta con ese ID.")
+
+
+def eliminar_venta():
+    print("\n--- ELIMINAR VENTA ---")
+    try:
+        id_eliminar = int(input("Ingrese el ID de la venta a eliminar: "))
+    except ValueError:
+        print("ID no válido.")
+        return
+
+    for venta in ventas_restaurante:
+        if venta["idVenta"] == id_eliminar:
+            ventas_restaurante.remove(venta)
+            print(f"Venta {id_eliminar} eliminada correctamente.")
+            return
+
+    print("No se encontró ninguna venta con ese ID.")
+
+
+def agregar_venta():
+    print("\n--- AGREGAR VENTA ---")
+    try:
+        nuevo_id = int(input("ID de venta: "))
+        nombre   = input("Nombre del cliente: ").strip()
+        mesa     = int(input("Número de mesa: "))
+        plato    = input("Plato principal: ").strip()
+        valor    = float(input("Valor del consumo: "))
+
+        metodo = input("Método de pago (EFECTIVO / TARJETA / TRANSFERENCIA): ").strip().upper()
+        if metodo not in ["EFECTIVO", "TARJETA", "TRANSFERENCIA"]:
+            print("Método de pago no válido.")
+            return
+
+        estado = input("Estado del pedido (ENTREGADO / PENDIENTE): ").strip().upper()
+        if estado not in ["ENTREGADO", "PENDIENTE"]:
+            print("Estado no válido.")
+            return
+
+        nueva_venta = {
+            "idVenta"       : nuevo_id,
+            "nombreCliente" : nombre,
+            "numeroMesa"    : mesa,
+            "platoPrincipal": plato,
+            "valorConsumo"  : valor,
+            "metodoPago"    : metodo,
+            "estadoPedido"  : estado
+        }
+
+        ventas_restaurante.append(nueva_venta)
+        print("Venta agregada correctamente.")
+
+    except ValueError:
+        print("Error: ingrese los datos en el formato correcto.")
