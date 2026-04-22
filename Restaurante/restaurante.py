@@ -14,3 +14,41 @@ ventas_restaurante = [
     {"idVenta": 9,  "nombreCliente": "Diego Morales",   "numeroMesa": 3,  "platoPrincipal": "Lomo al Trapo",       "valorConsumo": 75000, "metodoPago": "TARJETA",       "estadoPedido": "ENTREGADO"},
     {"idVenta": 10, "nombreCliente": "Valentina Rios",  "numeroMesa": 2,  "platoPrincipal": "Arroz con Pollo",     "valorConsumo": 19000, "metodoPago": "EFECTIVO",      "estadoPedido": "PENDIENTE"},
 ]
+
+# 2.   Función para registrar un nuevo usuario
+
+def registrar_usuario():
+    print("\n--- REGISTRO DE USUARIO ---")
+    correo = input("Correo: ").strip()
+
+    for usuario in usuarios:
+        if usuario["correo"] == correo:
+            print("Ese correo ya está registrado.")
+            return
+
+    password = input("Password: ").strip()
+    usuarios.append({"correo": correo, "password": password})
+    print("Usuario registrado correctamente.")
+
+
+def iniciar_sesion():
+    print("\n--- INICIO DE SESION ---")
+    max_intentos = 4
+
+    for intento in range(max_intentos):
+        correo   = input("Correo: ").strip()
+        password = input("Password: ").strip()
+
+        for usuario in usuarios:
+            if usuario["correo"] == correo and usuario["password"] == password:
+                print("Login exitoso. Bienvenido,", correo)
+                return True
+
+        intentos_restantes = max_intentos - (intento + 1)
+        if intentos_restantes > 0:
+            print(f"Credenciales incorrectas. Intentos restantes: {intentos_restantes}")
+        else:
+            print("Cuenta bloqueada temporalmente.")
+            return False
+
+    return False
