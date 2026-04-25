@@ -144,3 +144,74 @@ def agregar_venta():
 
     except ValueError:
         print("Error: ingrese los datos en el formato correcto.")
+        # ============================================================
+# MENÚS
+# ============================================================
+
+def menu_ventas():
+    while True:
+        print("\n--- GESTIÓN DE VENTAS ---")
+        print("1. Mostrar todas las ventas")
+        print("2. Ordenar ventas por valor")
+        print("3. Buscar venta por ID")
+        print("4. Eliminar una venta")
+        print("5. Agregar una venta")
+        print("6. Volver")
+
+        opcion = input("Seleccione una opción: ").strip()
+
+        if opcion == "1":
+            mostrar_ventas()
+        elif opcion == "2":
+            ordenar_ventas()
+        elif opcion == "3":
+            buscar_venta()
+        elif opcion == "4":
+            eliminar_venta()
+        elif opcion == "5":
+            agregar_venta()
+        elif opcion == "6":
+            break
+        else:
+            print("Opción no válida.")
+
+
+def menu_principal():
+    while True:
+        print("\n=============================")
+        print("   RESTAURANTE - MENU PRINCIPAL")
+        print("=============================")
+        print("1. Gestionar ventas del restaurante")
+        print("2. Salir")
+
+        opcion = input("Seleccione una opción: ").strip()
+
+        if opcion == "1":
+            menu_ventas()
+        elif opcion == "2":
+            print("Hasta luego.")
+            break
+        else:
+            print("Opción no válida.")
+
+# Inicio del programa
+
+print("=============================")
+print("   RESTAURANTE - SISTEMA")
+print("=============================")
+print("1. Registrarse")
+print("2. Iniciar sesión")
+
+opcion_inicio = input("Seleccione una opción: ").strip()
+
+if opcion_inicio == "1":
+    registrar_usuario()
+    sesion_activa = iniciar_sesion()
+elif opcion_inicio == "2":
+    sesion_activa = iniciar_sesion()
+else:
+    print("Opción no válida.")
+    sesion_activa = False
+
+if sesion_activa:
+    menu_principal()
